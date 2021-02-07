@@ -7,6 +7,4 @@ A  gory little game I'm not sure I'm proud of; I was a teenage boy. Another dude
      * maybe delete whole applet thingy, not supported since 2015
   ### JavaScript
      * Dog poop animation isn't running.
-     * numbers output funny now they aint int
-     * Laser
 
