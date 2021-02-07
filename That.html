@@ -3,7 +3,7 @@
 <meta charset="UTF-8">
 <title>Car</title>
 <!-- TODO: Lock to portrait view -->
-<meta name=viewport content='width=300'>
+<meta name=viewport content='width=320'>
 <script language=javascript>
 
 // Images
@@ -690,10 +690,12 @@ function processInput() {
   {
     if (mouseIsDown)
     {
-      if (mousePos.x > xpos) xmove = Math.min(mousePos.x-xpos,7+bonus);
-      if (mousePos.y > ypos) ymove = Math.min(mousePos.y-ypos,7+bonus);
-      if (mousePos.x < xpos) xmove = Math.max(mousePos.x-xpos,-7-bonus);
-      if (mousePos.y < ypos) ymove = Math.max(mousePos.y-ypos,-7-bonus);
+      realx = xpos + 20;
+      realy = ypos + 20;
+      if (mousePos.x > realx) xmove = Math.min(mousePos.x-realx,7+bonus);
+      if (mousePos.y > realy) ymove = Math.min(mousePos.y-realy,7+bonus);
+      if (mousePos.x < realx) xmove = Math.max(mousePos.x-realx,-7-bonus);
+      if (mousePos.y < realy) ymove = Math.max(mousePos.y-realy,-7-bonus);
     }
     else if (laser > 0)
     {
