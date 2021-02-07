@@ -163,6 +163,8 @@ function Start() {
   enem2=10;
   enem3=10;
   enem4=10;
+  
+  laser = 0;
 }
 
 function run() {
@@ -506,28 +508,8 @@ function paint() {
     }
     if (owy!=0) g.drawImage(ow, owx, owy);
     if (laser<0) {
-      // TODO
-      log("LASER: TODO!");
-      //area = 3;
-      for (var misc=1;misc<100; misc++) {
-        if (misc%4==0) g.fillStyle="#F00";
-        if (misc%4==1) g.fillStyle="#0F0";
-        if (misc%4==2) g.fillStyle="#00F";
-        if (misc%4==3) g.fillStyle="#0F0";
-        g.fillRect(xpos+10,0,20,ypos);
-        g.fillRect(xpos+10,ypos+40,20,300-ypos-40);
-        l.drawImage(offscreen,0,0);
-      }
-      if (Math.abs(bcx-xpos)<20) {bcx-=1000; score+=125;}
-      if (Math.abs(ocx-xpos)<20) {ocx-=1000; score+=125;}
-      if (Math.abs(tgx-xpos)<20) {tgx-=1000; score+=125;}
-      if (Math.abs(otgx-xpos)<20) {otgx-=1000; score+=125;}
-      if (Math.abs(fx-xpos)<20) {fx=300; score+=5;}
-      if (Math.abs(bombx-xpos)<20) {bombx=300; score+=25;}
-      if (Math.abs(dx-xpos)<20) {dx=300; score+=10;}
-      if (Math.abs(killx-xpos)<20) {killx=300; score+=50;}
-      score+=100;
-      laser=0;
+      log("LASER!");
+      area = 3;
     }
     //g.setColor(Color.red);
     //g.setFont(new Font("TimesRoman",Font.PLAIN,12));
@@ -542,6 +524,31 @@ function paint() {
     if (Math.random()>.3) g.fillStyle="#FF0";
     g.fillText("LASER",3,87);
     }
+  }
+  
+  if (area==3) {
+      laser++;
+      if (laser%3==0) g.fillStyle="#F00";
+      if (laser%3==1) g.fillStyle="#0F0";
+      if (laser%3==2) g.fillStyle="#00F";
+      g.fillRect(xpos+10,0,20,ypos);
+      g.fillRect(xpos+10,ypos+40,20,300-ypos-40);
+      l.drawImage(offscreen,0,0);
+        
+      if (Math.abs(bcx-xpos)<20) {bcx-=1000; score+=125;}
+      if (Math.abs(ocx-xpos)<20) {ocx-=1000; score+=125;}
+      if (Math.abs(tgx-xpos)<20) {tgx-=1000; score+=125;}
+      if (Math.abs(otgx-xpos)<20) {otgx-=1000; score+=125;}
+      if (Math.abs(fx-xpos)<20) {fx=300; score+=5;}
+      if (Math.abs(bombx-xpos)<20) {bombx=300; score+=25;}
+      if (Math.abs(dx-xpos)<20) {dx=300; score+=10;}
+      if (Math.abs(killx-xpos)<20) {killx=300; score+=50;}
+      if ( laser == 10 ) // Run for 1/2 a second
+      {
+        score+=100;
+        laser=0;
+        area=1;
+      }
   }
 
   if (area==4) {
@@ -632,6 +639,13 @@ function processInput() {
     {
         Start();
         clearInput(null);
+    }
+    if (keyControls.enter)
+    {
+      if (laser > 0 )
+      {
+        laser = -1;
+      }
     }
   }
   else if (area == 4)
