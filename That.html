@@ -444,16 +444,20 @@ function run() {
     }
     if (stuffy>1500) {
       stuffy= 0; stuffx = 25 + Math.floor(Math.random() * 250);}
-    if (xmove > 0) xmove -= 1;
-    else xmove += 1;
-    if (ymove < 0) ymove++;
-    if (ymove>0) ymove --;
+      
+    // Original game had you slide a little instead of stoping instantly
+    // (using --), but I've decided that's too hard to control even with the
+    // new /2.
+    //xmove = Math.floor(xmove/2);
+    //ymove = Math.floor(ymove/2);
+    xmove = 0;
+    ymove = 0;
 }
 
 function update() {
   paint();
-  if (area == 3 || area == 5) { return; }
-  if (area == 1) { run(); }
+  if (area === 3 || area === 5) { return; }
+  if (area === 1) { run(); }
   processInput();
 }
 
@@ -466,10 +470,10 @@ function drawLine(x1,y1,x2,y2)
 }
 
 function paint() {
-  if (area == 1)  {
+  if (area === 1)  {
     g.fillStyle="#808080";
     g.fillRect(0,0,300,300);
-    if (flight%20==0) {
+    if (flight%20===0) {
       g.fillStyle="#909080";
       //g.setFont(new Font("TimesRoman",Font.BOLD,36));
       g.font="36px Arial";
@@ -534,11 +538,11 @@ function paint() {
     }
   }
   
-  if (area==3) {
+  if (area===3) {
       laser++;
-      if (laser%3==0) g.fillStyle="#F00";
-      if (laser%3==1) g.fillStyle="#0F0";
-      if (laser%3==2) g.fillStyle="#00F";
+      if (laser%3===0) g.fillStyle="#F00";
+      if (laser%3===1) g.fillStyle="#0F0";
+      if (laser%3===2) g.fillStyle="#00F";
       g.fillRect(xpos+10,0,20,ypos);
       g.fillRect(xpos+10,ypos+40,20,300-ypos-40);
       l.drawImage(offscreen,0,0);
@@ -551,7 +555,7 @@ function paint() {
       if (Math.abs(bombx-xpos)<20) {bombx=300; score+=25;}
       if (Math.abs(dx-xpos)<20) {dx=300; score+=10;}
       if (Math.abs(killx-xpos)<20) {killx=300; score+=50;}
-      if ( laser == 10 ) // Run for 1/2 a second
+      if ( laser === 10 ) // Run for 1/2 a second
       {
         score+=100;
         laser=0;
@@ -559,44 +563,44 @@ function paint() {
       }
   }
 
-  if (area==4) {
+  if (area===4) {
     g.fillStyle="#FFF";
     //g.setFont(new Font("TimesRoman",Font.BOLD,36));
     g.font="36px Arial";
     g.fillText("Paused",100,170);
   }
 
-  if (area==5) {
+  if (area===5) {
       cred++;
       g.fillStyle="#000";
       g.fillRect(0,0,400,400);
       g.font="16px Arial";
       g.fillStyle="#0F0";
-      g.fillText("Designer: Chaz", 50, 300-cred);
-      g.fillText("Programer: Sean Head", 50, 320-cred);
-      g.fillText("Website: Julian Helder", 50, 340-cred);
-      g.fillText("Artwork: Chaz", 50, 360-cred);
-      g.fillText("Assistent artist: Sean Head", 50, 380-cred);
+      g.fillText("Designer:  Chaz", 50, 300-cred);
+      g.fillText("Programer: Sean", 50, 320-cred);
+      g.fillText("Website:   Julian", 50, 340-cred);
+      g.fillText("Artwork:   Chaz", 50, 360-cred);
+      g.fillText("Assistent artist:    Sean", 50, 380-cred);
       g.fillText("Assistent programer: Chaz", 50, 400-cred);
       g.fillText("Testers:", 50, 420-cred);
-      g.fillText("Chaz", 100, 440-cred);
-      g.fillText("Nathan James", 100, 460-cred);
-      g.fillText("Sean Head", 100, 480-cred);
-      g.fillText("Andrew Jones", 100, 500-cred);
-      g.fillText("Jenny Guerber", 100, 520-cred);
-      g.fillText("Julian Helder", 100, 540-cred);
-      g.fillText("Some guy", 100, 560-cred);
-      g.fillText("Many Unlisted", 100, 580-cred);
-      g.fillText("Something else: Julean Helder", 50, 600-cred);
+      g.fillText("  Chaz", 100, 440-cred);
+      g.fillText("  Nathan", 100, 460-cred);
+      g.fillText("  Sean", 100, 480-cred);
+      g.fillText("  Andrew", 100, 500-cred);
+      g.fillText("  Jenny", 100, 520-cred);
+      g.fillText("  Julian", 100, 540-cred);
+      g.fillText("  Some guy", 100, 560-cred);
+      g.fillText("  Many Unlisted", 100, 580-cred);
+      g.fillText("Something else: Julean", 50, 600-cred);
       g.fillText("", 50, 580-cred);
-      if (cred == 600)
+      if (cred === 600)
       {
         cred = 0;
         area = 0;
       }
   }
 
-  if (area == 0) {
+  if (area === 0) {
     g.fillStyle="#000";
     g.fillRect(0,0,400,400);
     //g.setFont(new Font("TimesRoman",Font.BOLD,18));
@@ -621,23 +625,23 @@ function paint() {
 }
 
 function processInput() {
-  if (area == 1)
+  if (area === 1)
   {
     if (keyControls.down)
     {
-      ymove = 7+bonus;
+      ymove = 10+bonus;
     }
     if (keyControls.up)
     {
-      ymove = -7-bonus;
+      ymove = -10-bonus;
     }
     if (keyControls.left)
     {
-      xmove = -7-bonus;
+      xmove = -10-bonus;
     }
     if (keyControls.right)
     {
-      xmove = 7+bonus;
+      xmove = 10+bonus;
     }
     if (keyControls.pause)
     {
@@ -657,7 +661,7 @@ function processInput() {
       }
     }
   }
-  else if (area == 4)
+  else if (area === 4)
   {
     if (keyControls.pause)
     {
@@ -665,7 +669,7 @@ function processInput() {
       clearInput(null);
     }
   }
-  else if (area == 0)
+  else if (area === 0)
   {
     if (keyControls.enter)
     {
@@ -679,40 +683,41 @@ function processInput() {
   }
   
   // Mouse Controls
-  if (area == 0)
+  if (area === 0)
   {
     if (mouseIsDown)
     {
       Start();
     }
   }
-  else if (area == 1)
+  else if (area === 1)
   {
     if (mouseIsDown)
     {
       realx = xpos + 20;
       realy = ypos + 20;
-      if (mousePos.x > realx) xmove = Math.min(mousePos.x-realx,7+bonus);
-      if (mousePos.y > realy) ymove = Math.min(mousePos.y-realy,7+bonus);
-      if (mousePos.x < realx) xmove = Math.max(mousePos.x-realx,-7-bonus);
-      if (mousePos.y < realy) ymove = Math.max(mousePos.y-realy,-7-bonus);
+      if (mousePos.x > realx) xmove = Math.min(mousePos.x-realx,15+bonus);
+      if (mousePos.y > realy) ymove = Math.min(mousePos.y-realy,15+bonus);
+      if (mousePos.x < realx) xmove = Math.max(mousePos.x-realx,-15-bonus);
+      if (mousePos.y < realy) ymove = Math.max(mousePos.y-realy,-15-bonus);
     }
-    else if (laser > 0)
+    else if (mouseUpHappened && laser > 0)
     {
       laser = -1;
     }
-    else if (condition>0 && gas>0) // Only pouse if the play COULD move
+    else if (mouseUpHappened && condition>0 && gas>0) // Only pouse if the play COULD move
     {
       area = 4;
     }
   }
-  else if (area == 4)
+  else if (area === 4)
   {
     if (mouseIsDown)
     {
       area = 1;
     }
   }
+  mouseUpHappened = false;
   // TODO mouse -> laser / credits
   // maybe two finger touch / right click?
   
@@ -735,15 +740,15 @@ function storeInput(e)
   //log(e.keyCode + " down")
   input = e.keyCode;
   // 65 = a
-  if (input == 65) { keyControls.left=true; }
+  if (input === 65) { keyControls.left=true; }
   // 83 = s
-  if (input == 83) { keyControls.down=true; }
+  if (input === 83) { keyControls.down=true; }
   // 68 = d
-  if (input == 68) { keyControls.right=true; }
+  if (input === 68) { keyControls.right=true; }
   // 87 = w
-  if (input == 87) { keyControls.up=true; }
+  if (input === 87) { keyControls.up=true; }
   // 32 = space
-  if (input == 32) { keyControls.space=true; 
+  if (input === 32) { keyControls.space=true; 
     e.preventDefault(); } // Don't scroll
   if(e.key === "Enter") { keyControls.enter=true; 
     e.preventDefault(); } // Don't scroll
@@ -766,15 +771,15 @@ function clearInput(e)
   // log(e.keyCode + " up")
   input = e.keyCode;
   // 65 = a
-  if (input == 65) { keyControls.left=false; }
+  if (input === 65) { keyControls.left=false; }
   // 83 = s
-  if (input == 83) { keyControls.down=false; }
+  if (input === 83) { keyControls.down=false; }
   // 68 = d
-  if (input == 68) { keyControls.right=false; }
+  if (input === 68) { keyControls.right=false; }
   // 87 = w
-  if (input == 87) { keyControls.up=false; }
+  if (input === 87) { keyControls.up=false; }
   // 32 = space
-  if (input == 32) { keyControls.missile=false; 
+  if (input === 32) { keyControls.missile=false; 
     e.preventDefault(); } // Don't scroll
   if(e.key === "Enter") { keyControls.enter=false; 
     e.preventDefault(); } // Don't scroll
@@ -802,10 +807,12 @@ function rollCredits()
 
 var mouseIsDown = false;
 var mousePos = {x:0,y:0}
+var mouseUpHappened = false; // Pause needs to react to this event
 
 function mouseUp(e)
 {
   mouseIsDown = false;
+  mouseUpHappened = true;
   //log("mouseUp<br>");
 }
 
@@ -828,8 +835,8 @@ function handleStart(evt) {
   positionTouch(touch.pageX,touch.pageY);
   //log("handleStart("+mousePos.x+","+mousePos.y+")");
 
-  if (game.state == 0) { newGame(); }
-  if (game.state == 2) { game.state=0; }
+  if (game.state === 0) { newGame(); }
+  if (game.state === 2) { game.state=0; }
 }
 function handleMove(evt) {
   evt.preventDefault();
@@ -844,7 +851,6 @@ function handleEnd(evt) {
   var touch = touches[0]; // only use 1
   positionTouch(touch.pageX,touch.pageY);
   mouseIsDown = false;
-  fireMissile();
   //log("handleEnd("+mousePos.x+","+mousePos.y+")");
 }
 function handleCancel(evt) {
