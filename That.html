@@ -606,20 +606,18 @@ function paint() {
     //g.setFont(new Font("TimesRoman",Font.BOLD,18));
     g.font="18px Arial";
     g.fillStyle="#F00";
-    g.fillText("The Game is simple; use the", 10, 20);
-    g.fillText("arrow keys to manuever the", 10, 40);
-    g.fillText("car, and try to avoid", 10, 60);
-    g.fillText("or run over things,", 10, 80);
-    g.fillText("depending on your", 10, 100);
-    g.fillText("morals. You'll have to", 10, 120);
-    g.fillText("click on the applet", 10, 140);
-    g.fillText("b4 it will register", 10, 160);
-    g.fillText("your keystrokes.", 10, 180);
-    g.fillText("Space: Start/Restart game", 10, 200);
-    g.fillText("Esc: Pause/Unpause Game", 10, 220);
-    g.fillText("Enter: Credits", 10, 240);
-    g.fillText("If you have a laser, enter",10,260);
-    g.fillText("fires it.",10,280); 
+    g.fillText("The Game is simple: manuever the", 10, 20);
+    g.fillText("car, and try to avoid", 10, 40);
+    g.fillText("or run over things,", 10, 60);
+    g.fillText("depending on your morals.", 10, 80);
+    // TODO: arrow keys again should also work
+    g.fillText("Touch/Click to play.", 10, 160);
+    g.fillText("   or ", 10, 180);
+    g.fillText("WASD: to move", 10, 200);
+    g.fillText("Space: Start/Restart game", 10, 220);
+    g.fillText("Esc: Pause/Unpause Game", 10, 240);
+    g.fillText("Enter: Credits", 10, 260);
+    g.fillText("If you have a laser, Enter to fire",10,280);
   }
   l.drawImage(offscreen,0,0);
 }
@@ -650,8 +648,18 @@ function processInput() {
     }
     if (keyControls.space)
     {
+      // I keep thinking space = laser, lets make it law.
+      if (laser != 0 )
+      {
+        laser = -1;
+        keyControls.space = false;
+      }
+      else
+      {
+        // TODO: restart doesn't clear everything.
         Start();
         clearInput(null);
+      }
     }
     if (keyControls.enter)
     {
@@ -718,7 +726,6 @@ function processInput() {
     }
   }
   mouseUpHappened = false;
-  // TODO mouse -> laser / credits
   // maybe two finger touch / right click?
   
   
@@ -750,6 +757,7 @@ function storeInput(e)
   // 32 = space
   if (input === 32) { keyControls.space=true; 
     e.preventDefault(); } // Don't scroll
+  if(e.key === "{") { laser=1; } // Cheat code!
   if(e.key === "Enter") { keyControls.enter=true; 
     e.preventDefault(); } // Don't scroll
   if(e.key === "Escape") {keyControls.pause=true;
