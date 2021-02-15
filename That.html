@@ -576,24 +576,25 @@ function paint() {
       g.fillRect(0,0,400,400);
       g.font="16px Arial";
       g.fillStyle="#0F0";
-      g.fillText("Designer:  Chaz", 50, 300-cred);
-      g.fillText("Programer: Sean", 50, 320-cred);
-      g.fillText("Website:   Julian", 50, 340-cred);
-      g.fillText("Artwork:   Chaz", 50, 360-cred);
-      g.fillText("Assistent artist:    Sean", 50, 380-cred);
-      g.fillText("Assistent programer: Chaz", 50, 400-cred);
-      g.fillText("Testers:", 50, 420-cred);
-      g.fillText("  Chaz", 100, 440-cred);
-      g.fillText("  Nathan", 100, 460-cred);
-      g.fillText("  Sean", 100, 480-cred);
-      g.fillText("  Andrew", 100, 500-cred);
-      g.fillText("  Jenny", 100, 520-cred);
-      g.fillText("  Julian", 100, 540-cred);
-      g.fillText("  Some guy", 100, 560-cred);
-      g.fillText("  Many Unlisted", 100, 580-cred);
-      g.fillText("Something else: Julean", 50, 600-cred);
-      g.fillText("", 50, 580-cred);
-      if (cred === 600)
+      var offset = 300, increment = 20;
+      g.fillText("Designer:  Chaz", 50, offset-cred); offset+=increment;
+      g.fillText("Programer: Sean", 50, offset-cred); offset+=increment;
+      g.fillText("Old site:  Julian", 50, offset-cred); offset+=increment;
+      g.fillText("New site:  Sean",50, offset-cred); offset+=increment;
+      g.fillText("Artwork:   Chaz", 50, offset-cred); offset+=increment;
+      g.fillText("Assistent artist:    Sean", 50, offset-cred); offset+=increment;
+      g.fillText("Assistent programer: Chaz", 50, offset-cred); offset+=increment;
+      g.fillText("Testers:", 50, offset-cred); offset+=increment;
+      g.fillText("  Chaz", 100, offset-cred); offset+=increment;
+      g.fillText("  Nathan", 100, offset-cred); offset+=increment;
+      g.fillText("  Sean", 100, offset-cred); offset+=increment;
+      g.fillText("  Andrew", 100, offset-cred); offset+=increment;
+      g.fillText("  Jenny", 100, offset-cred); offset+=increment;
+      g.fillText("  Julian", 100, offset-cred); offset+=increment;
+      g.fillText("  Some guy", 100, offset-cred); offset+=increment;
+      g.fillText("  Many Unlisted", 100, offset-cred); offset+=increment;
+      g.fillText("Something else: Julian", 50, offset-cred); offset+=increment;
+      if (cred === 400)
       {
         cred = 0;
         area = 0;
