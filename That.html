@@ -4,6 +4,7 @@
 <title>Car</title>
 <!-- TODO: Lock to portrait view -->
 <meta name=viewport content='width=320'>
+<script language=javascript src='AnimateGifs.js'></script>
 <script language=javascript>
 
 // Images
@@ -117,17 +118,31 @@ function init() {
   p = document.getElementById('image-p');
   u = document.getElementById('image-u');
   bc = document.getElementById('image-bc');
-  ow = document.getElementById('image-ow');
+  ow = new Animation();
+  ow.addFrame(document.getElementById('image-ow1'));
+  ow.addFrame(document.getElementById('image-ow2'));
   f = document.getElementById('image-f');
   df = document.getElementById('image-df');
   doo = document.getElementById('image-doo');
   ddoo = document.getElementById('image-ddoo');
   gascan = document.getElementById('image-gascan');
-  flame = document.getElementById('image-flame');
-  cardie = document.getElementById('image-cardie');
-  cardead = document.getElementById('image-cardead');
+  flame = new Animation();
+  flame.addFrame(document.getElementById('image-flame1'));
+  flame.addFrame(document.getElementById('image-flame2'));
+  flame.addFrame(document.getElementById('image-flame3'));
+  cardie = new Animation();
+  cardie.addFrame(document.getElementById('image-cardie1'));
+  cardie.addFrame(document.getElementById('image-cardie2'));
+  cardie.addFrame(document.getElementById('image-cardie3'));
+  cardead = new Animation();
+  cardead.addFrame(document.getElementById('image-cardead1'));
+  cardead.addFrame(document.getElementById('image-cardead2'));
+  cardead.addFrame(document.getElementById('image-cardead3'));
   tg = document.getElementById('image-tg');
   b = document.getElementById('image-b');
+  b = new Animation();
+  b.addFrame(document.getElementById('image-b1'));
+  b.addFrame(document.getElementById('image-b2'));
 
   el = c;
   el.addEventListener("touchstart",  handleStart,  false);
@@ -499,26 +514,26 @@ function paint() {
     g.drawImage(df,dfx,dfy);
     if (bcx>0) {
     g.drawImage(bc, bcx,bcy);} else {
-    g.drawImage(cardead, bcx+1000,bcy); }
+    g.drawImage(cardead.getFrame(), bcx+1000,bcy); }
     if (ocx>0) {
     g.drawImage(bc, ocx,ocy);} else {
-    g.drawImage(cardead, ocx+1000,ocy); }
+    g.drawImage(cardead.getFrame(), ocx+1000,ocy); }
     if (tgx>0) {
     g.drawImage(tg, tgx,tgy);} else {
-    g.drawImage(cardead, tgx+1000,tgy); }
+    g.drawImage(cardead.getFrame(), tgx+1000,tgy); }
     if (otgx>0) {
     g.drawImage(tg, otgx,otgy);} else {
-    g.drawImage(cardead, otgx+1000,otgy); }
-    g.drawImage(b,bx,by);
+    g.drawImage(cardead.getFrame(), otgx+1000,otgy); }
+    g.drawImage(b.getFrame(),bx,by);
     if (condition>20) {
       g.drawImage(car, xpos, ypos);} else {
       if (condition>0) {
-        g.drawImage(flame, xpos,ypos); } else {
-        if (gas>0) { g.drawImage(cardie,xpos,ypos);  flight=400;} else {
-        g.drawImage(cardead,xpos,ypos);}
+        g.drawImage(flame.getFrame(), xpos,ypos); } else {
+        if (gas>0) { g.drawImage(cardie.getFrame(),xpos,ypos);  flight=400;} else {
+        g.drawImage(cardead.getFrame(),xpos,ypos);}
       }
     }
-    if (owy!=0) g.drawImage(ow, owx, owy);
+    if (owy!=0) g.drawImage(ow.getFrame(), owx, owy);
     if (laser<0) {
       log("LASER!");
       area = 3;
@@ -579,7 +594,7 @@ function paint() {
       var offset = 300, increment = 20;
       g.fillText("Designer/Artist: Chaz", 50, offset-cred); offset+=increment;
       g.fillText("Programer: Sean", 50, offset-cred); offset+=increment;
-      g.fillText("Teacher: [Disavowed credit]", 50, offset-cred); offset+=increment;
+      g.fillText("Teacher: [Disavows credit]", 50, offset-cred); offset+=increment;
       g.fillText("Testers:", 50, offset-cred); offset+=increment;
       g.fillText("  Nathan", 100, offset-cred); offset+=increment;
       g.fillText("  Andrew", 100, offset-cred); offset+=increment;
@@ -891,16 +906,30 @@ function positionTouch(x,y)
 <img style="display: none;" id='image-u' src="images/upgrade.gif"/>
 <img style="display: none;" id='image-bc' src="images/oncomingcar.gif"/>
 <img style="display: none;" id='image-ow' src="images/ow.gif"/>
+<img style="display: none;" id='image-ow1' src="images/ow1.gif"/>
+<img style="display: none;" id='image-ow2' src="images/ow2.gif"/>
 <img style="display: none;" id='image-f' src="images/frog.gif"/>
 <img style="display: none;" id='image-df' src="images/deadfrog.gif"/>
 <img style="display: none;" id='image-doo' src="images/dog.gif"/>
 <img style="display: none;" id='image-ddoo' src="images/deaddog.gif"/>
 <img style="display: none;" id='image-gascan' src="images/gascan.gif"/>
 <img style="display: none;" id='image-flame' src="images/flamingcar.gif"/>
+<img style="display: none;" id='image-flame1' src="images/flamingcar1.gif"/>
+<img style="display: none;" id='image-flame2' src="images/flamingcar2.gif"/>
+<img style="display: none;" id='image-flame3' src="images/flamingcar3.gif"/>
 <img style="display: none;" id='image-cardie' src="images/carboom.gif"/>
+<img style="display: none;" id='image-cardie1' src="images/carboom1.gif"/>
+<img style="display: none;" id='image-cardie2' src="images/carboom2.gif"/>
+<img style="display: none;" id='image-cardie3' src="images/carboom3.gif"/>
 <img style="display: none;" id='image-cardead' src="images/carboomed.gif"/>
+<img style="display: none;" id='image-cardead1' src="images/carboomed1.gif"/>
+<img style="display: none;" id='image-cardead2' src="images/carboomed2.gif"/>
+<img style="display: none;" id='image-cardead3' src="images/carboomed3.gif"/>
 <img style="display: none;" id='image-tg' src="images/tailingcar.gif"/>
 <img style="display: none;" id='image-b' src="images/bonus.gif"/>
+<img style="display: none;" id='image-b1' src="images/bonus1.gif"/>
+<img style="display: none;" id='image-b2' src="images/bonus2.gif"/>
+
 
 </body>
 </html>
