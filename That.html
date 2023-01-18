@@ -123,7 +123,12 @@ function init() {
   ow.addFrame(document.getElementById('image-ow2'));
   f = document.getElementById('image-f');
   df = document.getElementById('image-df');
-  doo = document.getElementById('image-doo');
+  doo = new Animation();
+  doo.addFrame(document.getElementById('image-doo1'));
+  doo.addFrame(document.getElementById('image-doo2'));
+  doo.addFrame(document.getElementById('image-doo3'));
+  doo.addFrame(document.getElementById('image-doo4'));
+  doo.addFrame(document.getElementById('image-doo5'));
   ddoo = document.getElementById('image-ddoo');
   gascan = document.getElementById('image-gascan');
   flame = new Animation();
@@ -508,7 +513,7 @@ function paint() {
     g.drawImage(u, stuffx, stuffy);
     g.drawImage(dd, boomx, boomy);
     g.drawImage(dp, kaboomx,whyGodWhy);
-    g.drawImage(doo,dx,dy);
+    g.drawImage(doo.getFrame(),dx,dy);
     g.drawImage(f,fx,fy);
     g.drawImage(ddoo,ddx,ddy);
     g.drawImage(df,dfx,dfy);
@@ -911,6 +916,11 @@ function positionTouch(x,y)
 <img style="display: none;" id='image-f' src="images/frog.gif"/>
 <img style="display: none;" id='image-df' src="images/deadfrog.gif"/>
 <img style="display: none;" id='image-doo' src="images/dog.gif"/>
+<img style="display: none;" id='image-doo1' src="images/dog1.gif"/>
+<img style="display: none;" id='image-doo2' src="images/dog2.gif"/>
+<img style="display: none;" id='image-doo3' src="images/dog3.gif"/>
+<img style="display: none;" id='image-doo4' src="images/dog4.gif"/>
+<img style="display: none;" id='image-doo5' src="images/dog5.gif"/>
 <img style="display: none;" id='image-ddoo' src="images/deaddog.gif"/>
 <img style="display: none;" id='image-gascan' src="images/gascan.gif"/>
 <img style="display: none;" id='image-flame' src="images/flamingcar.gif"/>
