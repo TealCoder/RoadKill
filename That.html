@@ -96,11 +96,30 @@ var fx=0;
 var fy=300;
 var dfx=300;
 var dfy=0;
-var ddx=0;
+var ddoox=0;
 var gasx=0;
 var gasy=0;
-var ddy=300;
+var ddooy=300;
 var cred = 0;
+
+var frog_squish;
+var dog_squish;
+var person_squish;
+var deer_squish;
+var bonus_aud;
+var gas_aud;
+var repair_aud;
+var explode_aud;
+var bangs_aud = [];
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+function goBang()
+{
+  bang_idx = getRandomInt(bangs_aud.length);
+  bangs_aud[bang_idx].play();
+}
 
 function init() {
   offscreen = document.createElement('canvas');
@@ -148,6 +167,21 @@ function init() {
   b = new Animation();
   b.addFrame(document.getElementById('image-b1'));
   b.addFrame(document.getElementById('image-b2'));
+  
+  frog_squish = document.getElementById("frog-squish");
+  dog_squish = document.getElementById("dog-squish");
+  person_squish = document.getElementById("person-squish");
+  deer_squish = document.getElementById("deer-squish");
+  bonus_aud = document.getElementById("bonus-aud");
+  gas_aud = document.getElementById("gas-aud");
+  repair_aud = document.getElementById("repair-aud");
+  explode_aud = document.getElementById("explode-aud");
+  
+  bangs_aud.push(document.getElementById("bang1-aud"));
+  bangs_aud.push(document.getElementById("bang2-aud"));
+  bangs_aud.push(document.getElementById("bang3-aud"));
+  bangs_aud.push(document.getElementById("bang4-aud"));
+  bangs_aud.push(document.getElementById("bang5-aud"));
 
   el = c;
   el.addEventListener("touchstart",  handleStart,  false);
@@ -215,7 +249,7 @@ function run() {
     if (ocx>0) {ocy+=speed+7;} else {ocy+=speed;}
     by+=speed;
     dy+=speed;
-    ddy+=speed;
+    ddooy+=speed;
     bomby += speed;
     killy += speed-2;
     boomy += speed;
@@ -235,12 +269,14 @@ function run() {
       speed++;}
     if (gas<=0) { gas=0; speed=0; }
     owy=0;
-    if (condition<=0){ if (gas>10) gas=10; condition=0;}
+    if (condition<=0){ if (gas>10) {gas=10; 
+         explode_aud.play(); } condition=0;}
     if (stuffx > xpos - 25 && stuffx < xpos + 25 && stuffy < ypos + 40 && stuffy > ypos - 30) {
       condition = 100;
       gas+=100;
       score+=10;
       stuffy+=300;
+      repair_aud.play();
     }
     if (bx > xpos - 25 && bx < xpos + 25 && by < ypos + 40 && by > ypos - 30) {
       if (Math.random()<.3) {
@@ -250,11 +286,13 @@ function run() {
         laser=1;}
       }
       by=300;
+      bonus_aud.play();
     }
     if (gasx > xpos - 25 && gasx < xpos + 25 && gasy < ypos + 40 && gasy > ypos - 30) {
       gas += 500;
       score+=10;
       gasy+=300;
+      gas_aud.play();
     }
 
     if ((killx > xpos - 25 && killx < xpos + 25 && killy < ypos + 40 && killy > ypos -10)) {
@@ -263,6 +301,7 @@ function run() {
       kaboomx = killx;
       killy = 1300;
       condition-=2;
+      person_squish.play();
     }
 
     if ((bombx > xpos - 35 && bombx < xpos + 35 && bomby < ypos + 35 && bomby > ypos - 10)) {
@@ -271,36 +310,44 @@ function run() {
       boomx = bombx;
       bomby = 1300;
       condition-=3;
+      deer_squish.play();
+      
     }
     if (killx > bcx - 25 && killx < bcx + 25 && killy < bcy + 40 && killy > bcy -10) {
       whyGodWhy = killy;
       kaboomx = killx;
       killy = 1300;
+      person_squish.play();
     }
     if (dx > bcx - 25 && dx < bcx + 25 && dy < bcy + 40 && dy > bcy -10) {
-      ddy = dy;
-      ddx = dx;
+      ddooy = dy;
+      ddoox = dx;
       dy = 1300;
+      dog_squish.play();
     }
     if (bombx > bcx - 35 && bombx < bcx + 35 && bomby < bcy + 35 && bomby > bcy - 10) {
       boomy = bomby;
       boomx = bombx;
       bomby = 1300;
+      deer_squish.play();
     }
     if (killx > tgx - 25 && killx < tgx + 25 && killy < tgy + 40 && killy > tgy -10) {
       whyGodWhy = killy;
       kaboomx = killx;
       killy = 1300;
+      person_squish.play();
     }
     if (dx > tgx - 25 && dx < tgx + 25 && dy < tgy + 40 && dy > tgy -10) {
-      ddy = dy;
-      ddx = dx;
+      ddooy = dy;
+      ddoox = dx;
       dy = 1300;
+      dog_squish.play();
     }
     if (bombx > tgx - 35 && bombx < tgx + 35 && bomby < tgy + 35 && bomby > tgy - 10) {
       boomy = bomby;
       boomx = bombx;
       bomby = 1300;
+      deer_squish.play();
     }
     if (tgx > xpos - 37 && tgx < xpos + 37 && tgy < ypos + 37 && tgy > ypos - 37) {
       var test = (Math.abs(tgx-xpos)+Math.abs(tgy-ypos));
@@ -311,8 +358,9 @@ function run() {
       if (xpos>tgx) {xpos+=1; tgx-=1;}
       if (xpos<tgx) {xpos-=1; tgx+=1;}
       enem3--;
-      if (enem3<=0) {tgx-=1000; score+=250;}
+      if (enem3<=0) {tgx-=1000; score+=250; explode_aud.play(); }
       ypos-=2;
+      goBang();
     }
 
     if (ocx > xpos - 37 && ocx < xpos + 37 && ocy < ypos + 37 && ocy > ypos - 37) {
@@ -326,7 +374,8 @@ function run() {
       enem2--;
       ypos+=3;
       speed-=2;
-      if (enem2<=0) {ocx-=1000; score+=250;}
+      if (enem2<=0) {ocx-=1000; score+=250; explode_aud.play(); }
+      goBang();
     }
     if (otgx > xpos - 37 && otgx < xpos + 37 && otgy < ypos + 37 && otgy > ypos - 37) {
       var test = (Math.abs(otgx-xpos)+Math.abs(otgy-ypos));
@@ -338,7 +387,8 @@ function run() {
       if (xpos>otgx) {xpos+=1; otgx-=1;}
       if (xpos<otgx) {xpos-=1; otgx+=1;}
       ypos-=3;
-      if (enem4<=0) {otgx-=1000; score+=250;}
+      if (enem4<=0) {otgx-=1000; score+=250; explode_aud.play(); }
+      goBang();
     }
 
     if (bcx > xpos - 37 && bcx < xpos + 37 && bcy < ypos + 37 && bcy > ypos - 37) {
@@ -352,7 +402,8 @@ function run() {
       if (xpos<bcx) {xpos-=2; bcx+=1;}
       ypos+=3;
       speed-=2;
-      if (enem1<=0){bcx-=1000; score+=250;}
+      if (enem1<=0){bcx-=1000; score+=250; explode_aud.play(); }
+      goBang();
     }
 
     if ((fx > xpos - 25 && fx < xpos + 25 && fy < ypos + 30 && fy > ypos -10)) {
@@ -360,63 +411,75 @@ function run() {
       dfy = fy;
       dfx = fx;
       fy = 1300;
+      frog_squish.play();
     }
     if ((fx > bcx - 25 && fx < bcx + 25 && fy < bcy + 30 && fy > bcy -10)) {
       dfy = fy;
       dfx = fx;
       fy = 1300;
+      frog_squish.play();
     }
     if ((fx > tgx - 25 && fx < tgx + 25 && fy < tgy + 30 && fy > tgy -10)) {
       dfy = fy;
       dfx = fx;
       fy = 1300;
+      frog_squish.play();
     }
     if ((fx > ocx - 25 && fx < ocx + 25 && fy < ocy + 30 && fy > ocy -10)) {
       dfy = fy;
       dfx = fx;
       fy = 1300;
+      frog_squish.play();
     }
     if ((fx > otgx - 25 && fx < otgx + 25 && fy < otgy + 30 && fy > otgy -10)) {
       dfy = fy;
       dfx = fx;
       fy = 1300;
+      frog_squish.play();
     }
     if ((dx > xpos - 35 && dx < xpos + 35 && dy < ypos + 35 && dy > ypos - 10)) {
       score += 25;
-      ddy = dy;
-      ddx = dx;
+      ddooy = dy;
+      ddoox = dx;
       dy = 1300;
       condition--;
+      dog_squish.play();
     }
     if (killx > ocx - 25 && killx < ocx + 25 && killy < ocy + 40 && killy > ocy -10) {
       whyGodWhy = killy;
       kaboomx = killx;
       killy = 1300;
+      person_squish.play();
     }
     if (dx > ocx - 25 && dx < ocx + 25 && dy < ocy + 40 && dy > ocy -10) {
-      ddy = dy;
-      ddx = dx;
+      ddooy = dy;
+      ddoox = dx;
       dy = 1300;
+      dog_squish.play();
     }
     if (bombx > ocx - 35 && bombx < ocx + 35 && bomby < ocy + 35 && bomby > ocy - 10) {
       boomy = bomby;
       boomx = bombx;
       bomby = 1300;
+      deer_squish.play();
     }
     if (killx > otgx - 25 && killx < otgx + 25 && killy < otgy + 40 && killy > otgy -10) {
       whyGodWhy = killy;
       kaboomx = killx;
       killy = 1300;
+      person_squish.play();
     }
     if (dx > otgx - 25 && dx < otgx + 25 && dy < otgy + 40 && dy > otgy -10) {
-      ddy = dy;
-      ddx = dx;
+      ddooy = dy;
+      ddoox = dx;
       dy = 1300;
+      dog_squish.play();
     }
     if (bombx > otgx - 35 && bombx < otgx + 35 && bomby < otgy + 35 && bomby > otgy - 10) {
       boomy = bomby;
       boomx = bombx;
       bomby = 1300;
+      deer_squish.play();
     }
     if (killy < ypos) {
       if (killx > xpos) killx += 2;
@@ -515,7 +578,7 @@ function paint() {
     g.drawImage(dp, kaboomx,whyGodWhy);
     g.drawImage(doo.getFrame(),dx,dy);
     g.drawImage(f,fx,fy);
-    g.drawImage(ddoo,ddx,ddy);
+    g.drawImage(ddoo,ddoox,ddooy);
     g.drawImage(df,dfx,dfy);
     if (bcx>0) {
     g.drawImage(bc, bcx,bcy);} else {
@@ -903,6 +966,8 @@ function positionTouch(x,y)
 
 <pre text="#00ffff" id=log></pre>
 
+
+<!-- Images -->
 <img style="display: none;" id='image-car' src="images/car.gif"/>
 <img style="display: none;" id='image-dd' src="images/deaddeer.gif"/>
 <img style="display: none;" id='image-d' src="images/deer.gif"/>
@@ -940,6 +1005,26 @@ function positionTouch(x,y)
 <img style="display: none;" id='image-b1' src="images/bonus1.gif"/>
 <img style="display: none;" id='image-b2' src="images/bonus2.gif"/>
 
+<!-- Sounds -->
+<audio id="frog-squish" src="sounds/frog-squish.mp3">
+<audio id="dog-squish" src="sounds/dog-squish.mp3">
+<audio id="person-squish" src="sounds/person-squish.mp3">
+<audio id="deer-squish" src="sounds/deer-squish.mp3">
+<audio id="bonus-aud" src="sounds/bonus.mp3">
+<audio id="gas-aud" src="sounds/gas.mp3">
+<audio id="repair-aud" src="sounds/repair.mp3">
+<audio id="bang1-aud" src="sounds/bang1.mp3">
+<audio id="bang2-aud" src="sounds/bang2.mp3">
+<audio id="bang3-aud" src="sounds/bang3.mp3">
+<audio id="bang4-aud" src="sounds/bang4.mp3">
+<audio id="bang5-aud" src="sounds/bang5.mp3">
+<audio id="explode-aud" src="sounds/boom1.mp3">
+<audio id="exasdfaud" src="stasdfa.mp3">
+<!-- Coming soon!
+  <audio id="lazer_aud" src="Sounds/fighterJetMusicInOut.mp3">
+  <audio id="fire-aud" src="Sounds/fighterJetMusicInOut.mp3">
+  <audio id="dog-poop-aud" src="Sounds/fighterJetMusicInOut.mp3">
+-->
 
 </body>
 </html>
